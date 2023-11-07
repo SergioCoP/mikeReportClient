@@ -43,7 +43,6 @@ const APP_SHELL_INMUTABLE = [
     '/assets/vendor/boxicons/fonts/boxicons.woff2',
     '/assets/vendor/simple-datatables/simple-datatables.js',
     '/assets/vendor/simple-datatables/style.css',
-   
 ];
 
 const clear = (cacheName,items = 50) =>{//limite de archivos a guardarf en ache

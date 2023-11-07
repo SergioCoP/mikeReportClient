@@ -7,17 +7,22 @@
 })();
 
 const form = document.getElementById('signinForm');
+console.log(document.getElementById('yourUsername').value)
 const submitSigninForm = async (event) => {
   event.stopPropagation();
   event.preventDefault();
   if (form.checkValidity()) {
     const username = document.getElementById('yourUsername').value;
     const password = document.getElementById('yourPassword').value;
+    
+
     try {
+      console.log(username,password)
       const response = await axiosClient.post(`/auth/signin`, {
         username,
-        password,
+        password
       });
+      
       const payload = JSON.parse(atob(response.token.split('.')[1]));
       console.log(payload);
       if (response?.token) {
@@ -31,7 +36,7 @@ const submitSigninForm = async (event) => {
         changeView(payload.roles[0].role);
       }
     } catch (error) {
-      console.log(error.response.data);
+      //console.log(error.response);
       toastMessage('Credenciales incorrectas').showToast();
     }
   }
