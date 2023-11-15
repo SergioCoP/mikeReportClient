@@ -25,7 +25,7 @@ const apiIncidencesManager = (cacheName,req) =>{
     }
     //network with cache callfack / update
     if(req.clone().method === 'POST'){
-        if(self.registratation.sync && !navigator.onLine){
+        if(self.ServiceWorkerRegistration.sync && !navigator.onLine){
             return req.clone().text().then((body)=>{
                 return saveIncidences(JSON.parse(body));
             })

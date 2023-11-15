@@ -56,6 +56,12 @@ $(document).ready(function () {
   $('#role').text(role);
 
   getAllIncidencesPending();
+
+  navigator.serviceWorker.addEventListener('message',(event) => {
+    if(event.data && event.data.type === 'RELOAD_PAGE_AFTER_SYNC'){
+      window.location.reload(true)
+    }
+  })
 });
 
 

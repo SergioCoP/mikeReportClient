@@ -25,7 +25,7 @@ const savePostIncidences = () =>{
             const {rows} = docs;
             for (const row of rows) {
                 const {doc} = row; //doc -> incidence
-                const response = await fetch('http://206.189.234.55:3001/api/incidences/status',
+                const response = await fetch('http://206.189.234.55/api/incidences/status',
                 {method: 'POST',
                 headers: {
                     'Content-Type' : 'application/json'
@@ -34,11 +34,16 @@ const savePostIncidences = () =>{
         });
         const data = await response.json();
         if(data['changed']){
-            incidences.push(data);
-            return incidencesDB.remove(doc);
+            incidences.push(incidencesDB.remove(doc));
         }
                     
             }
-            return Promise.all(...incidences, getAllIncidencesPending());
+
+            const message = self.clients.matchAll().then((clients)=>{
+                clients.array.forEach(client => {
+                    client.postMessage({type: 'RELOAD_PAGE_AFTER_SYNC'});
+                });
+            });
+            return Promise.all(...incidences, message);
         })
 }
