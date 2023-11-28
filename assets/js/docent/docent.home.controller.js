@@ -62,8 +62,22 @@ const initializeCamera  = () =>{
 
 const takeAPhoto = () =>{
     const photo = camera.takeAPhoto();
-    payload = {...payload,annexes: [photo]}
+    payload = {...payload,annexes: [ {name: 'Photo' + $('#title').val() , mimeType: 'png',file:photo}]}
     camera.powerOff();
+}
+
+const registerIncidence = async () =>{
+  let selDate = $('#incidenceDate').val().split('T')[0] + ' ' + $('#incidenceDate').val().split('T')[1];
+  console.log($('#incidenceDate').val())
+  payload.title = $('#title').val();
+  payload.description = $('#description').val();
+  payload.type = $('#type').val();
+  payload.incidenceDate = selDate
+  payload.user = {id: parseInt(localStorage.getItem('idUser'))}
+  payload.person = {id: parseInt(localStorage.getItem('idPerson'))}
+  console.log(payload)
+    const response = await axiosClient.post(`/incidences/save`,payload);
+    console.log(response);
 }
 
 //registrar incidencia docent/admin

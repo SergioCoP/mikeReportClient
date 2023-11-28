@@ -26,14 +26,16 @@ const submitSigninForm = async (event) => {
       const payload = JSON.parse(atob(response.token.split('.')[1]));
       console.log(payload);
       if (response?.token) {
-        fullname = `${payload.person.name} ${payload.person.surname}${
-          payload.person.lastname ? ` ${payload.person.lastname}` : ''
-        }`;
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('activeRole', payload.roles[0].role);
-        localStorage.setItem('fullname', fullname);
-        toastMessage(`Bienvenido ${username}`).showToast();
-        changeView(payload.roles[0].role);
+      fullname = `${payload.person.name} ${payload.person.surname}${
+        payload.person.lastname ? ` ${payload.person.lastname}` : ''
+      }`;
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('activeRole', payload.roles[0].role);
+      localStorage.setItem('fullname', fullname);
+      localStorage.setItem('idUser', payload.id)
+      localStorage.setItem('idPerson',payload.person.id)
+      toastMessage(`Bienvenido ${username}`).showToast();
+      changeView(payload.roles[0].role);
       }
     } catch (error) {
       //console.log(error.response);
