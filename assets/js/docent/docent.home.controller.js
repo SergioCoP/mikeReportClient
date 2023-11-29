@@ -72,8 +72,8 @@ const registerIncidence = async () =>{
   payload.title = $('#title').val();
   payload.description = $('#description').val();
   payload.type = $('#type').val();
-  payload.incidenceDate = selDate
-  payload.user = {id: parseInt(localStorage.getItem('idUser'))}
+  payload.incidenceDate = selDate;
+  payload.userId = parseInt(localStorage.getItem('idUser'));
   payload.person = {id: parseInt(localStorage.getItem('idPerson'))}
   console.log(payload)
     const response = await axiosClient.post(`/incidences/save`,payload);
