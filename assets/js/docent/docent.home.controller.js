@@ -67,17 +67,23 @@ const takeAPhoto = () =>{
 }
 
 const registerIncidence = async () =>{
+  const user = parserJWT();
   let selDate = $('#incidenceDate').val().split('T')[0] + ' ' + $('#incidenceDate').val().split('T')[1];
   console.log($('#incidenceDate').val())
   payload.title = $('#title').val();
   payload.description = $('#description').val();
   payload.type = $('#type').val();
   payload.incidenceDate = selDate;
-  payload.userId = parseInt(localStorage.getItem('idUser'));
+  payload.userId = user.id;
   payload.person = {id: parseInt(localStorage.getItem('idPerson'))}
   console.log(payload)
     const response = await axiosClient.post(`/incidences/save`,payload);
-    console.log(response);
+    if(response.registered){
+      toastMessage('Inicencia registrada').showToast();
+      getAllIncidencesByEmployee();
+    }else{
+      toastMessage('No pude registrarse la incidencia').showToast();
+    }
 }
 
 //registrar incidencia docent/admin
