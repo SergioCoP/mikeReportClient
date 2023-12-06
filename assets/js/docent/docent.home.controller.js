@@ -80,9 +80,11 @@ const registerIncidence = async () =>{
     const response = await axiosClient.post(`/incidences/save`,payload);
     if(response.registered){
       toastMessage('Inicencia registrada').showToast();
+      $('#largeModal').modal('hide');
       getAllIncidencesByEmployee();
     }else{
-      toastMessage('No pude registrarse la incidencia').showToast();
+      toastMessage('No pudo registrarse la incidencia').showToast();
+      $('#largeModal').modal('hide');
     }
 }
 
